@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "47.97.213.122",
+    "app1029.acapp.acwing.com.cn",
 ]
 
 
