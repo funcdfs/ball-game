@@ -2,7 +2,7 @@ class GamePlayground {
     constructor(root) {
         this.root = root;
         this.$playground = $(`<div class="game-playground"></div>`);
-
+        this.colors_index = -1;
         this.hide();
         this.start();
     }
@@ -15,7 +15,8 @@ class GamePlayground {
             "#2cf543",
             "#a37e26",
         ];
-        return colors[Math.floor(Math.random() * 5)];
+        this.colors_index++;
+        return colors[this.colors_index];
     }
 
     start() {
@@ -30,7 +31,7 @@ class GamePlayground {
         this.players = [];
         this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "white", this.height * 0.15, true));
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 5; i++) {
             this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, this.get_random_color(), this.height * 0.15, false));
         }
 

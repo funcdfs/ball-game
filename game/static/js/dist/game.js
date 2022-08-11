@@ -15,12 +15,12 @@ class GameMenu {
         <div class="game-menu-item game-menu-item-settings">
             Settings
         </div>
-        <div class="game-menu-item game-menu-item-author">
-            About Author
-        </div>
 
         <div class="game-menu-item game-menu-item-sign-out">
             Sign Out
+        </div>
+        <div class="game-menu-item game-menu-item-author">
+            About Author
         </div>
     </div>
 </div>
@@ -56,10 +56,22 @@ class GameMenu {
         })
         this.$sign_out.click(function () {
             console.log("click sign_out")
-            outer.root.settings.logout_on_remote();
+            outer.logout_on_remote();
         })
     }
 
+    logout_on_remote() {
+        $.ajax({
+            url: "https://app1029.acapp.acwing.com.cn/settings/logout/",
+            type: "GET",
+            success: function (resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    location.reload();
+                }
+            }
+        });
+    }
     show() {  // 显示menu界面
         this.$menu.show();
     }
@@ -423,7 +435,7 @@ class GamePlayground {
     constructor(root) {
         this.root = root;
         this.$playground = $(`<div class="game-playground"></div>`);
-
+        this.colors_index = -1;
         this.hide();
         this.start();
     }
@@ -436,7 +448,8 @@ class GamePlayground {
             "#2cf543",
             "#a37e26",
         ];
-        return colors[Math.floor(Math.random() * 5)];
+        this.colors_index++;
+        return colors[this.colors_index];
     }
 
     start() {
@@ -451,7 +464,7 @@ class GamePlayground {
         this.players = [];
         this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "white", this.height * 0.15, true));
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 5; i++) {
             this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, this.get_random_color(), this.height * 0.15, false));
         }
 

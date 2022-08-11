@@ -15,12 +15,12 @@ class GameMenu {
         <div class="game-menu-item game-menu-item-settings">
             Settings
         </div>
-        <div class="game-menu-item game-menu-item-author">
-            About Author
-        </div>
 
         <div class="game-menu-item game-menu-item-sign-out">
             Sign Out
+        </div>
+        <div class="game-menu-item game-menu-item-author">
+            About Author
         </div>
     </div>
 </div>
@@ -56,10 +56,22 @@ class GameMenu {
         })
         this.$sign_out.click(function () {
             console.log("click sign_out")
-            outer.root.settings.logout_on_remote();
+            outer.logout_on_remote();
         })
     }
 
+    logout_on_remote() {
+        $.ajax({
+            url: "https://app1029.acapp.acwing.com.cn/settings/logout/",
+            type: "GET",
+            success: function (resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    location.reload();
+                }
+            }
+        });
+    }
     show() {  // 显示menu界面
         this.$menu.show();
     }
