@@ -1,4 +1,4 @@
-class Particle extends AcGameObject {
+class Particle extends GameObject {
     constructor(playground, x, y, radius, vx, vy, color, speed, move_length) {
         super();
         this.playground = playground;

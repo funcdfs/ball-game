@@ -1,4 +1,4 @@
-class GameMap extends AcGameObject {
+class GameMap extends GameObject {
     constructor(playground) {
         super();
         this.playground = playground;

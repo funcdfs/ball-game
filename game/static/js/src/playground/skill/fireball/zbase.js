@@ -1,4 +1,4 @@
-class FireBall extends AcGameObject {
+class FireBall extends GameObject {
     constructor(playground, player, x, y, radius, vx, vy, color, speed, move_length, damage) {
         super();
         this.playground = playground;

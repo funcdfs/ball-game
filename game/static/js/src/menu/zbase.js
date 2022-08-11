@@ -1,28 +1,34 @@
-class AcGameMenu {
+class GameMenu {
     constructor(root) {
         this.root = root;
         this.$menu = $(`
-<div class="ac-game-menu">
-    <div class="ac-game-menu-field">
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-single-mode">
-            单人模式
-        </div>
-        <br>
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-multi-mode">
-            多人模式
-        </div>
-        <br>
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-settings">
-            设置
-        </div>
+<div class = "game-menu-background-box">
+    <div class="game-menu-item game-menu-item-single" >
+        Single Player Mode
+    </div>
+
+    <div class="game-menu-item game-menu-item-multi">
+        Multi Player Mode
+    </div>
+
+    <div class="game-menu-item game-menu-item-settings">
+        Settings
+    </div>
+    <div class="game-menu-item game-menu-item-author">
+        About Author
+    </div>
+
+    <div class="game-menu-item game-menu-item-sign-out">
+        Sign Out
     </div>
 </div>
-`);
-        this.root.$ac_game.append(this.$menu);
-        this.$single_mode = this.$menu.find('.ac-game-menu-field-item-single-mode');
-        this.$multi_mode = this.$menu.find('.ac-game-menu-field-item-multi-mode');
-        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings');
-
+        `);
+        this.root.$game.append(this.$menu);
+        this.$single_mode = this.$menu.find('.game-menu-item-single');
+        this.$multi_mode = this.$menu.find('.game-menu-item-multi');
+        this.$settings = this.$menu.find('.game-menu-item-settings');
+        this.$author = this.$menu.find('.game-menu-item-author')
+        this.$sign_out = this.$menu.find('.game-menu-item-sign-out')
         this.start();
     }
 
@@ -42,6 +48,12 @@ class AcGameMenu {
         this.$settings.click(function () {
             console.log("click settings");
         });
+        this.$author.click(function () {
+            console.log("click author")
+        })
+        this.$sign_out.click(function() {
+            console.log("click sign_out")
+        })
     }
 
     show() {  // 显示menu界面

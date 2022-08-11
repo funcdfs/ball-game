@@ -1,28 +1,34 @@
-class AcGameMenu {
+class GameMenu {
     constructor(root) {
         this.root = root;
         this.$menu = $(`
-<div class="ac-game-menu">
-    <div class="ac-game-menu-field">
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-single-mode">
-            单人模式
-        </div>
-        <br>
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-multi-mode">
-            多人模式
-        </div>
-        <br>
-        <div class="ac-game-menu-field-item ac-game-menu-field-item-settings">
-            设置
-        </div>
+<div class = "game-menu-background-box">
+    <div class="game-menu-item game-menu-item-single" >
+        Single Player Mode
+    </div>
+
+    <div class="game-menu-item game-menu-item-multi">
+        Multi Player Mode
+    </div>
+
+    <div class="game-menu-item game-menu-item-settings">
+        Settings
+    </div>
+    <div class="game-menu-item game-menu-item-author">
+        About Author
+    </div>
+
+    <div class="game-menu-item game-menu-item-sign-out">
+        Sign Out
     </div>
 </div>
-`);
-        this.root.$ac_game.append(this.$menu);
-        this.$single_mode = this.$menu.find('.ac-game-menu-field-item-single-mode');
-        this.$multi_mode = this.$menu.find('.ac-game-menu-field-item-multi-mode');
-        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings');
-
+        `);
+        this.root.$game.append(this.$menu);
+        this.$single_mode = this.$menu.find('.game-menu-item-single');
+        this.$multi_mode = this.$menu.find('.game-menu-item-multi');
+        this.$settings = this.$menu.find('.game-menu-item-settings');
+        this.$author = this.$menu.find('.game-menu-item-author')
+        this.$sign_out = this.$menu.find('.game-menu-item-sign-out')
         this.start();
     }
 
@@ -42,6 +48,12 @@ class AcGameMenu {
         this.$settings.click(function () {
             console.log("click settings");
         });
+        this.$author.click(function () {
+            console.log("click author")
+        })
+        this.$sign_out.click(function() {
+            console.log("click sign_out")
+        })
     }
 
     show() {  // 显示menu界面
@@ -51,12 +63,11 @@ class AcGameMenu {
     hide() {  // 关闭menu界面
         this.$menu.hide();
     }
-}
-let AC_GAME_OBJECTS = [];
+}let GAME_OBJECTS = [];
 
-class AcGameObject {
+class GameObject {
     constructor() {
-        AC_GAME_OBJECTS.push(this);
+        GAME_OBJECTS.push(this);
 
         this.has_called_start = false;  // 是否执行过start函数
         this.timedelta = 0;  // 当前帧距离上一帧的时间间隔
@@ -74,9 +85,9 @@ class AcGameObject {
     destroy() {  // 删掉该物体
         this.on_destroy();
 
-        for (let i = 0; i < AC_GAME_OBJECTS.length; i++) {
-            if (AC_GAME_OBJECTS[i] === this) {
-                AC_GAME_OBJECTS.splice(i, 1);
+        for (let i = 0; i < GAME_OBJECTS.length; i++) {
+            if (GAME_OBJECTS[i] === this) {
+                GAME_OBJECTS.splice(i, 1);
                 break;
             }
         }
@@ -84,9 +95,9 @@ class AcGameObject {
 }
 
 let last_timestamp;
-let AC_GAME_ANIMATION = function (timestamp) {
-    for (let i = 0; i < AC_GAME_OBJECTS.length; i++) {
-        let obj = AC_GAME_OBJECTS[i];
+let GAME_ANIMATION = function (timestamp) {
+    for (let i = 0; i < GAME_OBJECTS.length; i++) {
+        let obj = GAME_OBJECTS[i];
         if (!obj.has_called_start) {
             obj.start();
             obj.has_called_start = true;
@@ -97,12 +108,12 @@ let AC_GAME_ANIMATION = function (timestamp) {
     }
     last_timestamp = timestamp;
 
-    requestAnimationFrame(AC_GAME_ANIMATION);
+    requestAnimationFrame(GAME_ANIMATION);
 }
 
 
-requestAnimationFrame(AC_GAME_ANIMATION);
-class GameMap extends AcGameObject {
+requestAnimationFrame(GAME_ANIMATION);
+class GameMap extends GameObject {
     constructor(playground) {
         super();
         this.playground = playground;
@@ -125,7 +136,7 @@ class GameMap extends AcGameObject {
         this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 }
-class Particle extends AcGameObject {
+class Particle extends GameObject {
     constructor(playground, x, y, radius, vx, vy, color, speed, move_length) {
         super();
         this.playground = playground;
@@ -166,7 +177,7 @@ class Particle extends AcGameObject {
         this.ctx.fill();
     }
 }
-class Player extends AcGameObject {
+class Player extends GameObject {
     constructor(playground, x, y, radius, color, speed, is_me) {
         super();
         this.playground = playground;
@@ -202,10 +213,10 @@ class Player extends AcGameObject {
 
     add_listening_events() {
         let outer = this;
-        this.playground.game_map.$canvas.on("contextmenu", function() {
+        this.playground.game_map.$canvas.on("contextmenu", function () {
             return false;
         });
-        this.playground.game_map.$canvas.mousedown(function(e) {
+        this.playground.game_map.$canvas.mousedown(function (e) {
             const rect = outer.ctx.canvas.getBoundingClientRect();
             if (e.which === 3) {
                 outer.move_to(e.clientX - rect.left, e.clientY - rect.top);
@@ -218,7 +229,7 @@ class Player extends AcGameObject {
             }
         });
 
-        $(window).keydown(function(e) {
+        $(window).keydown(function (e) {
             if (e.which === 81) {  // q
                 outer.cur_skill = "fireball";
                 return false;
@@ -251,7 +262,7 @@ class Player extends AcGameObject {
     }
 
     is_attacked(angle, damage) {
-        for (let i = 0; i < 20 + Math.random() * 10; i ++ ) {
+        for (let i = 0; i < 20 + Math.random() * 10; i++) {
             let x = this.x, y = this.y;
             let radius = this.radius * Math.random() * 0.1;
             let angle = Math.PI * 2 * Math.random();
@@ -314,14 +325,14 @@ class Player extends AcGameObject {
     }
 
     on_destroy() {
-        for (let i = 0; i < this.playground.players.length; i ++ ) {
+        for (let i = 0; i < this.playground.players.length; i++) {
             if (this.playground.players[i] === this) {
                 this.playground.players.splice(i, 1);
             }
         }
     }
 }
-class FireBall extends AcGameObject {
+class FireBall extends GameObject {
     constructor(playground, player, x, y, radius, vx, vy, color, speed, move_length, damage) {
         super();
         this.playground = playground;
@@ -389,18 +400,28 @@ class FireBall extends AcGameObject {
         this.ctx.fill();
     }
 }
-class AcGamePlayground {
+class GamePlayground {
     constructor(root) {
         this.root = root;
-        this.$playground = $(`<div class="ac-game-playground"></div>`);
+        this.$playground = $(`<div class="game-playground"></div>`);
 
         this.hide();
-
         this.start();
     }
 
     get_random_color() {
-        let colors = ["blue", "red", "pink", "grey", "green"];
+        let colors = [
+            "blue",
+            "pink",
+            "grey",
+            "green",
+            "orange",
+            "#9768ab",
+            "#145266",
+            "#d9688f",
+            "#2cf543",
+            "#a37e26",
+        ];
         return colors[Math.floor(Math.random() * 5)];
     }
 
@@ -409,14 +430,14 @@ class AcGamePlayground {
 
     show() {  // 打开playground界面
         this.$playground.show();
-        this.root.$ac_game.append(this.$playground);
+        this.root.$game.append(this.$playground);
         this.width = this.$playground.width();
         this.height = this.$playground.height();
         this.game_map = new GameMap(this);
         this.players = [];
         this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "white", this.height * 0.15, true));
 
-        for (let i = 0; i < 5; i ++ ) {
+        for (let i = 0; i < 4; i++) {
             this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, this.get_random_color(), this.height * 0.15, false));
         }
 
@@ -426,12 +447,12 @@ class AcGamePlayground {
         this.$playground.hide();
     }
 }
-export class AcGame {
+export class AGame {
     constructor(id) {
         this.id = id;
-        this.$ac_game = $('#' + id);
-        this.menu = new AcGameMenu(this);
-        this.playground = new AcGamePlayground(this);
+        this.$game = $('#' + id);
+        this.menu = new GameMenu(this);
+        this.playground = new GamePlayground(this);
 
         this.start();
     }

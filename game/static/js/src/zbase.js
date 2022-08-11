@@ -1,9 +1,9 @@
-export class AcGame {
+export class AGame {
     constructor(id) {
         this.id = id;
-        this.$ac_game = $('#' + id);
-        this.menu = new AcGameMenu(this);
-        this.playground = new AcGamePlayground(this);
+        this.$game = $('#' + id);
+        this.menu = new GameMenu(this);
+        this.playground = new GamePlayground(this);
 
         this.start();
     }

@@ -1,8 +1,8 @@
-let AC_GAME_OBJECTS = [];
+let GAME_OBJECTS = [];
 
-class AcGameObject {
+class GameObject {
     constructor() {
-        AC_GAME_OBJECTS.push(this);
+        GAME_OBJECTS.push(this);
 
         this.has_called_start = false;  // 是否执行过start函数
         this.timedelta = 0;  // 当前帧距离上一帧的时间间隔
@@ -20,9 +20,9 @@ class AcGameObject {
     destroy() {  // 删掉该物体
         this.on_destroy();
 
-        for (let i = 0; i < AC_GAME_OBJECTS.length; i++) {
-            if (AC_GAME_OBJECTS[i] === this) {
-                AC_GAME_OBJECTS.splice(i, 1);
+        for (let i = 0; i < GAME_OBJECTS.length; i++) {
+            if (GAME_OBJECTS[i] === this) {
+                GAME_OBJECTS.splice(i, 1);
                 break;
             }
         }
@@ -30,9 +30,9 @@ class AcGameObject {
 }
 
 let last_timestamp;
-let AC_GAME_ANIMATION = function (timestamp) {
-    for (let i = 0; i < AC_GAME_OBJECTS.length; i++) {
-        let obj = AC_GAME_OBJECTS[i];
+let GAME_ANIMATION = function (timestamp) {
+    for (let i = 0; i < GAME_OBJECTS.length; i++) {
+        let obj = GAME_OBJECTS[i];
         if (!obj.has_called_start) {
             obj.start();
             obj.has_called_start = true;
@@ -43,8 +43,8 @@ let AC_GAME_ANIMATION = function (timestamp) {
     }
     last_timestamp = timestamp;
 
-    requestAnimationFrame(AC_GAME_ANIMATION);
+    requestAnimationFrame(GAME_ANIMATION);
 }
 
 
-requestAnimationFrame(AC_GAME_ANIMATION);
+requestAnimationFrame(GAME_ANIMATION);

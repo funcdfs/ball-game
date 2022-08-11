@@ -1,4 +1,4 @@
-class Player extends AcGameObject {
+class Player extends GameObject {
     constructor(playground, x, y, radius, color, speed, is_me) {
         super();
         this.playground = playground;
@@ -34,10 +34,10 @@ class Player extends AcGameObject {
 
     add_listening_events() {
         let outer = this;
-        this.playground.game_map.$canvas.on("contextmenu", function() {
+        this.playground.game_map.$canvas.on("contextmenu", function () {
             return false;
         });
-        this.playground.game_map.$canvas.mousedown(function(e) {
+        this.playground.game_map.$canvas.mousedown(function (e) {
             const rect = outer.ctx.canvas.getBoundingClientRect();
             if (e.which === 3) {
                 outer.move_to(e.clientX - rect.left, e.clientY - rect.top);
@@ -50,7 +50,7 @@ class Player extends AcGameObject {
             }
         });
 
-        $(window).keydown(function(e) {
+        $(window).keydown(function (e) {
             if (e.which === 81) {  // q
                 outer.cur_skill = "fireball";
                 return false;
@@ -83,7 +83,7 @@ class Player extends AcGameObject {
     }
 
     is_attacked(angle, damage) {
-        for (let i = 0; i < 20 + Math.random() * 10; i ++ ) {
+        for (let i = 0; i < 20 + Math.random() * 10; i++) {
             let x = this.x, y = this.y;
             let radius = this.radius * Math.random() * 0.1;
             let angle = Math.PI * 2 * Math.random();
@@ -146,7 +146,7 @@ class Player extends AcGameObject {
     }
 
     on_destroy() {
-        for (let i = 0; i < this.playground.players.length; i ++ ) {
+        for (let i = 0; i < this.playground.players.length; i++) {
             if (this.playground.players[i] === this) {
                 this.playground.players.splice(i, 1);
             }
