@@ -17,11 +17,12 @@ body {
     height: 100%;
 }
 
-#game_12345678 {
+.game-menu {
     position: fixed;
     width: 100%;
     height: 100%;
-    background-image: url(http://47.97.213.122/static/image/menu/background.webp);
+    background-color: white;
+    background-image: url(https://media.giphy.com/media/01vw80KKJxhEtJNZvK/giphy.gif);
     background-size: 100% 100%;
 }
 

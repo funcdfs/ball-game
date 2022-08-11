@@ -2,27 +2,30 @@ class GameMenu {
     constructor(root) {
         this.root = root;
         this.$menu = $(`
-<div class = "game-menu-background-box">
-    <div class="game-menu-item game-menu-item-single" >
-        Single Player Mode
-    </div>
+<div class = "game-menu">
+    <div class = "game-menu-background-box">
+        <div class="game-menu-item game-menu-item-single" >
+            Single Player Mode
+        </div>
 
-    <div class="game-menu-item game-menu-item-multi">
-        Multi Player Mode
-    </div>
+        <div class="game-menu-item game-menu-item-multi">
+            Multi Player Mode
+        </div>
 
-    <div class="game-menu-item game-menu-item-settings">
-        Settings
-    </div>
-    <div class="game-menu-item game-menu-item-author">
-        About Author
-    </div>
+        <div class="game-menu-item game-menu-item-settings">
+            Settings
+        </div>
+        <div class="game-menu-item game-menu-item-author">
+            About Author
+        </div>
 
-    <div class="game-menu-item game-menu-item-sign-out">
-        Sign Out
+        <div class="game-menu-item game-menu-item-sign-out">
+            Sign Out
+        </div>
     </div>
 </div>
         `);
+        this.$menu.hide();
         this.root.$game.append(this.$menu);
         this.$single_mode = this.$menu.find('.game-menu-item-single');
         this.$multi_mode = this.$menu.find('.game-menu-item-multi');
@@ -51,8 +54,9 @@ class GameMenu {
         this.$author.click(function () {
             console.log("click author")
         })
-        this.$sign_out.click(function() {
+        this.$sign_out.click(function () {
             console.log("click sign_out")
+            outer.root.settings.logout_on_remote();
         })
     }
 
