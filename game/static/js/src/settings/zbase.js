@@ -236,7 +236,7 @@ class Settings {
 
 
         $.ajax({
-            url: "https://app1029.acapp.acwing.com.cn/settings/login/",
+            url: "http://47.97.213.122/settings/login/",
             type: "GET",
             data: {
                 username: username,
@@ -265,7 +265,7 @@ class Settings {
         this.$register_error_message.empty();
 
         $.ajax({
-            url: "https://app1029.acapp.acwing.com.cn/settings/register/",
+            url: "http://47.97.213.122/settings/register/",
             type: "GET",
             data: {
                 username: username,

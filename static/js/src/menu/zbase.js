@@ -62,7 +62,7 @@ class GameMenu {
 
     logout_on_remote() {
         $.ajax({
-            url: "https://app1029.acapp.acwing.com.cn/settings/logout/",
+            url: "http://47.97.213.122/settings/logout/",
             type: "GET",
             success: function (resp) {
                 console.log(resp);
