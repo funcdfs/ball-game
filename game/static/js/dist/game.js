@@ -43,7 +43,7 @@ class GameMenu {
         let outer = this;
         this.$single_mode.click(function () {
             outer.hide();
-            outer.root.playground.show();
+            outer.root.$playground.show();
         });
         this.$multi_mode.click(function () {
             console.log("click multi mode");
@@ -206,7 +206,7 @@ class Player extends GameObject {
 
         if (this.is_me) {
             this.img = new Image();
-            this.img.src = this.playground.root.settings.photo;
+            this.img.src = this.playground.root.$settings.photo;
         }
     }
 
@@ -251,7 +251,7 @@ class Player extends GameObject {
         let radius = this.playground.height * 0.01;
         let angle = Math.atan2(ty - this.y, tx - this.x);
         let vx = Math.cos(angle), vy = Math.sin(angle);
-        let color = "orange";
+        let color = "#A78BFA";
         let speed = this.playground.height * 0.5;
         let move_length = this.playground.height * 1;
         new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);
@@ -430,11 +430,6 @@ class GamePlayground {
 
     get_random_color() {
         let colors = [
-            "blue",
-            "pink",
-            "grey",
-            "green",
-            "orange",
             "#9768ab",
             "#145266",
             "#d9688f",
@@ -679,9 +674,9 @@ class Settings {
             outer.show_register();
         })
         this.$login_submit.click(function () {
-            // outer.login_on_remote(); 
-            console.log("username", outer.$login_username.val())
-            console.log("password", outer.$login_password.val())
+            outer.login_on_remote();
+            // console.log("username", outer.$login_username.val())
+            // console.log("password", outer.$login_password.val())
         })
     }
 
@@ -692,14 +687,66 @@ class Settings {
             outer.show_login();
         })
         this.$register_submit.click(function () {
-            // outer.register_on_remote(); 
-            console.log(outer.$register_username.val())
-            console.log(outer.$register_password.val())
-            console.log(outer.$register_password_confirm.val())
+            outer.register_on_remote();
         })
     }
 
+    login_on_remote() {
+        let outer = this
+        let username = outer.$login_username.val();
+        let password = outer.$login_password.val();
+        this.$login_error_message.empty();
 
+
+        $.ajax({
+            url: "https://app1029.acapp.acwing.com.cn/settings/login/",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+            },
+            success: function (resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    outer.$login.hide();
+                    outer.$register.hide();
+                    outer.game_root.$menu.show();
+                } else {
+                    outer.$login_error_message.html(resp.result);
+                    outer.$login_error_message.show();
+                }
+            }
+        });
+    }
+
+    register_on_remote() {
+        let outer = this;
+        let username = this.$register_username.val();
+        let password = this.$register_password.val();
+        let password_confirm = this.$register_password_confirm.val();
+        console.log(username, password, password_confirm)
+        this.$register_error_message.empty();
+
+        $.ajax({
+            url: "https://app1029.acapp.acwing.com.cn/settings/register/",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+                password_confirm: password_confirm,
+            },
+            success: function (resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    outer.show_login();
+                    outer.$register.hide();
+                } else {
+                    outer.$register_error_message.html(resp.result);
+                    outer.$register_error_message.show();
+                }
+            }
+        });
+    }
 
 }
 export class AGame {

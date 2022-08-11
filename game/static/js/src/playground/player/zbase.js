@@ -23,7 +23,7 @@ class Player extends GameObject {
 
         if (this.is_me) {
             this.img = new Image();
-            this.img.src = this.playground.root.settings.photo;
+            this.img.src = this.playground.root.$settings.photo;
         }
     }
 
@@ -68,7 +68,7 @@ class Player extends GameObject {
         let radius = this.playground.height * 0.01;
         let angle = Math.atan2(ty - this.y, tx - this.x);
         let vx = Math.cos(angle), vy = Math.sin(angle);
-        let color = "orange";
+        let color = "#A78BFA";
         let speed = this.playground.height * 0.5;
         let move_length = this.playground.height * 1;
         new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);

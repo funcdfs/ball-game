@@ -9,11 +9,6 @@ class GamePlayground {
 
     get_random_color() {
         let colors = [
-            "blue",
-            "pink",
-            "grey",
-            "green",
-            "orange",
             "#9768ab",
             "#145266",
             "#d9688f",

@@ -211,9 +211,9 @@ class Settings {
             outer.show_register();
         })
         this.$login_submit.click(function () {
-            // outer.login_on_remote(); 
-            console.log("username", outer.$login_username.val())
-            console.log("password", outer.$login_password.val())
+            outer.login_on_remote();
+            // console.log("username", outer.$login_username.val())
+            // console.log("password", outer.$login_password.val())
         })
     }
 
@@ -224,13 +224,65 @@ class Settings {
             outer.show_login();
         })
         this.$register_submit.click(function () {
-            // outer.register_on_remote(); 
-            console.log(outer.$register_username.val())
-            console.log(outer.$register_password.val())
-            console.log(outer.$register_password_confirm.val())
+            outer.register_on_remote();
         })
     }
 
+    login_on_remote() {
+        let outer = this
+        let username = outer.$login_username.val();
+        let password = outer.$login_password.val();
+        this.$login_error_message.empty();
 
+
+        $.ajax({
+            url: "https://app1029.acapp.acwing.com.cn/settings/login/",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+            },
+            success: function (resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    outer.$login.hide();
+                    outer.$register.hide();
+                    outer.game_root.$menu.show();
+                } else {
+                    outer.$login_error_message.html(resp.result);
+                    outer.$login_error_message.show();
+                }
+            }
+        });
+    }
+
+    register_on_remote() {
+        let outer = this;
+        let username = this.$register_username.val();
+        let password = this.$register_password.val();
+        let password_confirm = this.$register_password_confirm.val();
+        console.log(username, password, password_confirm)
+        this.$register_error_message.empty();
+
+        $.ajax({
+            url: "https://app1029.acapp.acwing.com.cn/settings/register/",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+                password_confirm: password_confirm,
+            },
+            success: function (resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    outer.show_login();
+                    outer.$register.hide();
+                } else {
+                    outer.$register_error_message.html(resp.result);
+                    outer.$register_error_message.show();
+                }
+            }
+        });
+    }
 
 }
