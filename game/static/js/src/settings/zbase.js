@@ -182,6 +182,7 @@ class Settings {
         this.game_root.$game.append(this.$settings);
 
         this.start();
+        this.$settings.hide(); 
     }
 
     start() {
