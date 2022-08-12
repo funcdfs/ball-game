@@ -8,7 +8,7 @@ class MultiPlayerSocket {
     }
 
     start() {
-        // this.receive();
+        this.receive();
     }
 
     receive() {
