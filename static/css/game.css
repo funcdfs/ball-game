@@ -63,6 +63,7 @@ body {
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
+
 /*login-from*/
 /* 清除浏览器默认边距，
 使边框和内边距的值包含在元素的width和height内 */
@@ -385,6 +386,7 @@ section .color:nth-child(5) {
     font-weight: 600;
     text-decoration: none;
 }
+
 /*login-from-end*/
 
 /*playground*/
@@ -398,7 +400,7 @@ section .color:nth-child(5) {
     height: 100vh;
 }
 
-.game-playground > canvas {
+.game-playground>canvas {
     position: relative;
     top: 50%;
     left: 50%;
@@ -407,3 +409,36 @@ section .color:nth-child(5) {
 
 /*playground end*/
 
+
+
+.game-chat-field-history {
+    position: absolute;
+    top: 66%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+
+    width: 20%;
+    height: 32%;
+
+    color: white;
+    font-size: 2vh;
+
+    padding: 5px;
+    overflow: auto;
+}
+
+.game-chat-field-history::-webkit-scrollbar {
+    width: 0;
+}
+
+.game-chat-field-input {
+    position: absolute;
+    top: 86%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 3vh;
+    color: white;
+    font-size: 2vh;
+    background-color: rgba(222,225,230, 0.2);
+}
