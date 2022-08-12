@@ -27,6 +27,16 @@ class GamePlayground {
         });
     }
 
+    resize() {
+        this.width = this.$playground.width();
+        this.height = this.$playground.height();
+        let unit = Math.min(this.width / 16, this.height / 9);
+        this.width = unit * 16;
+        this.height = unit * 9;
+        this.scale = this.height;
+
+        if (this.game_map) this.game_map.resize();
+    }
 
     show(mode) {  // 打开playground界面
         let outer = this;
@@ -35,6 +45,11 @@ class GamePlayground {
         this.width = this.$playground.width();
         this.height = this.$playground.height();
         this.game_map = new GameMap(this);
+
+        this.mode = mode;
+        this.state = "waiting";  // waiting -> fighting -> over
+        this.notice_board = new NoticeBoard(this);
+        this.player_count = 0;
 
         this.resize();
 
@@ -53,17 +68,7 @@ class GamePlayground {
                 outer.mps.send_create_player(outer.root.settings.username, outer.root.settings.photo);
             };
         }
-    }
 
-    resize() {
-        this.width = this.$playground.width();
-        this.height = this.$playground.height();
-        let unit = Math.min(this.width / 16, this.height / 9);
-        this.width = unit * 16;
-        this.height = unit * 9;
-        this.scale = this.height;
-
-        if (this.game_map) this.game_map.resize();
     }
 
     hide() {  // 关闭playground界面
