@@ -182,7 +182,7 @@ class Settings {
         this.game_root.$game.append(this.$settings);
 
         this.start();
-        this.$settings.hide(); 
+        // this.$settings.hide(); 
     }
 
     start() {
@@ -248,7 +248,7 @@ class Settings {
                 if (resp.result === "success") {
                     outer.$login.hide();
                     outer.$register.hide();
-                    outer.game_root.$menu.show();
+                    outer.game_root.menu.show();
                 } else {
                     outer.$login_error_message.html(resp.result);
                     outer.$login_error_message.show();

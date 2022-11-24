@@ -33,7 +33,7 @@ class GameMenu {
         this.$author = this.$menu.find('.game-menu-item-author')
         this.$sign_out = this.$menu.find('.game-menu-item-sign-out')
         this.start();
-        this.$menu.show();
+        // this.$menu.show();
     }
 
     start() {
@@ -46,7 +46,7 @@ class GameMenu {
             outer.hide();
             outer.root.playground.show("single mode");
         });
-        this.$multi_mode.click(function(){
+        this.$multi_mode.click(function () {
             outer.hide();
             outer.root.playground.show("multi mode");
         });

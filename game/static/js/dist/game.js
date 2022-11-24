@@ -33,7 +33,7 @@ class GameMenu {
         this.$author = this.$menu.find('.game-menu-item-author')
         this.$sign_out = this.$menu.find('.game-menu-item-sign-out')
         this.start();
-        this.$menu.show();
+        // this.$menu.show();
     }
 
     start() {
@@ -46,7 +46,7 @@ class GameMenu {
             outer.hide();
             outer.root.playground.show("single mode");
         });
-        this.$multi_mode.click(function(){
+        this.$multi_mode.click(function () {
             outer.hide();
             outer.root.playground.show("multi mode");
         });
@@ -1178,7 +1178,7 @@ class Player extends GameObject {
         this.game_root.$game.append(this.$settings);
 
         this.start();
-        this.$settings.hide(); 
+        // this.$settings.hide(); 
     }
 
     start() {
@@ -1244,7 +1244,7 @@ class Player extends GameObject {
                 if (resp.result === "success") {
                     outer.$login.hide();
                     outer.$register.hide();
-                    outer.game_root.$menu.show();
+                    outer.game_root.menu.show();
                 } else {
                     outer.$login_error_message.html(resp.result);
                     outer.$login_error_message.show();
